@@ -8,6 +8,9 @@ have similar convention on how to define project structure, it'll be lot easier 
 people to learn and replicate your code faster. This structure inspired from the popular 
 [data science cookiecutter](https://drivendata.github.io/cookiecutter-data-science/).
 
+This repo is extracted from [cookiecutter-templates repo](https://github.com/tvlk-data/cookiecutter-templates), and based on TVLK Data's research: [Reproducible Data Science - Repository Structure
+](https://docs.google.com/document/d/11Qn6ZZdlLh-_4wB5yzMr0VdXWfYVi3BG0pKHGzTEf_s/edit#heading=h.n3j3cqhdhgja) <credit to @hadyan-tvlk>
+
 ## Resulting Directory Structure
 The structure of project will be look like this
 ```
