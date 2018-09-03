@@ -1,5 +1,5 @@
 name: {{ cookiecutter._repo_name }}
-owner: {{ cookiecutter.pic }}
+owner: {{ cookiecutter.owner }}
 resources:
   requests:
     memory: "2Gi"
