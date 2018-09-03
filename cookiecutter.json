@@ -1,5 +1,6 @@
 {
     "project_name": "Name of your project",
     "_repo_name": "Github repository name",
-    "project_desc": "A short description of the project."
+    "project_desc": "A short description of the project.",
+    "pic": "Person/team in charge email"
 }

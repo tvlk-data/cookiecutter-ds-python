@@ -1,4 +1,5 @@
 name: {{ cookiecutter._repo_name }}
+pic: {{ cookiecutter.pic }}
 resources:
   requests:
     memory: "2Gi"
