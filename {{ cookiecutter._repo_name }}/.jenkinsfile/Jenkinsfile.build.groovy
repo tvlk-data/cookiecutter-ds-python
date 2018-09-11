@@ -50,6 +50,4 @@ coreJenkinsWorkerNode(
         sh "chmod +x rmi"
         sh "./rmi build"
     }
-
-
 }
