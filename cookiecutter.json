@@ -1,6 +1,10 @@
 {
     "project_name": "Name of your project",
-    "_repo_name": "Github repository name",
     "project_desc": "A short description of the project.",
-    "owner": "Person/team in charge email"
+    "owner": "Person/team in charge email",
+    "_repo_name": "Github repository name",
+    "_gcr_io_project_id": "Image repository project ID",
+    "_namespace": "Training and deployment namespace",
+    "_training_cluster_name": "Kubernetes training cluster name",
+    "_training_cluster_zone": "Kubernetes training cluster zone"
 }
