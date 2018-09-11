@@ -7,7 +7,7 @@ def gcrIOProjectId = "{{ cookiecutter._gcr_io_project_id }}"" //hardcoded in rmi
 // GKE deployment setting for the application
 def appName = "{{ cookiecutter._repo_name }}"
 def appNamespace = "{{ cookiecutter._namespace }}"
-def environment = "stg" //RM training is always in stg
+def environment = "stg" //rmi build always in stage
 
 def progressDeadlineSeconds = 180
 
