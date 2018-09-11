@@ -13,7 +13,7 @@ coreJenkinsWorkerNode(
   environment: environment,
   appName: appName,
   slackChannel: "#data-jenkins-hub",
-  clusterProjectId: {{ cookiecutter._gcr_io_project_id }}",
+  clusterProjectId: "{{ cookiecutter._gcr_io_project_id }}",
   clusterName: "{{ cookiecutter._training_cluster_name }}",
   clusterZone: "{{ cookiecutter._training_cluster_zone }}",
 
