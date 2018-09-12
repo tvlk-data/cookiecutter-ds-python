@@ -6,7 +6,6 @@ def gcrIOProjectId = "{{ cookiecutter._gcr_io_project_id }}" //hardcoded in rmi 
 
 // GKE deployment setting for the application
 def appName = "{{ cookiecutter._repo_name }}"
-def appNamespace = "{{ cookiecutter._namespace }}"
 def environment = "stg" //rmi build always in stage
 
 def progressDeadlineSeconds = 180
@@ -16,9 +15,13 @@ coreJenkinsWorkerNode(
         appName: appName,
         slackChannel: "#data-jenkins-hub",
         //the gke cluster where the training will be executed
-        clusterProjectId: "{{ cookiecutter._cluster_project_id }}",
-        clusterName: "{{ cookiecutter._training_cluster_name }}",
-        clusterZone: "{{ cookiecutter._training_cluster_zone }}",
+        //set to default since
+        // 1. we're reusing coreJenkinsWorkerNode that also interfaces to Kubernetes cluster
+        // 2. we don't want to expose to client (i.e. rm.yaml)
+        //we can remove them once we created a new helper function specific to rmi
+        clusterProjectId: "tvlk-data-dev-179204",
+        clusterName: "tvlk-data-dev",
+        clusterZone: "asia-southeast1-a",
 
         additionalContainers:[
                 containerTemplate(name: 'python', image: 'python:3.6', ttyEnabled: true, command: 'python')
