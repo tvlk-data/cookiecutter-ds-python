@@ -39,19 +39,20 @@ The structure of project will be look like this
 ├── reports             <- Where you put all the experiment results report and analysis
 ├── requirements.txt    <- Software requirement
 ├── setup.py
-└── src                 <- Reusable module for experiment
-    ├── datasets
-    │   ├── base.py
-    │   └── __init__.py
-    ├── __init__.py
-    ├── models
-    │   ├── base.py
-    │   └── __init__.py
-    ├── utils
-    │   └── __init__.py
-    └── visualization
-        └── __init__.py
-
+├── src
+│   ├── __init__.py
+│   ├── datasets
+│   │   ├── __init__.py
+│   │   ├── base.py
+│   ├── models
+│   │   ├── __init__.py
+│   │   ├── base.py
+│   ├── utils
+│   │   └── __init__.py
+│   └── visualization
+│       └── __init__.py
+└── tests
+    └── __init__.py
 ```
 
 # Notes
