@@ -2,7 +2,7 @@
 @Library("porter-jenkins-lib@master") _
 
 // image registry project
-def gcrIOProjectId = "{{ cookiecutter._gcr_io_project_id }}"" //hardcoded in rmi source code
+def gcrIOProjectId = "{{ cookiecutter._gcr_io_project_id }}" //hardcoded in rmi source code
 
 // GKE deployment setting for the application
 def appName = "{{ cookiecutter._repo_name }}"
@@ -39,7 +39,7 @@ coreJenkinsWorkerNode(
     container('python') {
       //install the requirement from this app
       sh "pip install -r requirements.txt"
-      sh "pip install pytest==3.5.1"
+      sh "pip install -r test-requirements.txt"
 
       // run unit test here, using pytest or unittest
       sh "pytest tests"
