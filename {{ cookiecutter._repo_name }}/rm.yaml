@@ -17,3 +17,9 @@ resources:
 # envs:
 #   - name: "MLFLOW_TRACKING_URI"
 #     value: "http://localhost:5000/"
+# UNCOMMENT CODE BELOW TO ADD BUILD CONFIGURATION
+# builds:
+#   - name: "BUILD_SERVER_URL"
+#     value: "https://jenkins.tvlk-data.com"
+#   - name: "BUILD_SERVER_USERNAME"
+#     value: "tvlk-data-bots@traveloka.com"
