@@ -1,8 +1,10 @@
 import argparse
 import yaml
+import os
 
 from src.datasets import preprocessing
 from src.models import training
+from rm_sdk.tracking.entities import ModelRun
 
 def is_preprocessing(mode):
     return mode == "all" or mode == "preprocessing"
@@ -45,7 +47,14 @@ if __name__ == "__main__":
         preprocessing.main()
 
     if is_training(mode):
-        training.main(
-            params=vars(args),
-            env_vars=env_vars
-        )
+        run_id = os.getenv('RUN_ID')
+
+        if not run_id:
+            raise AssertionError("run_id should be int not none")
+
+        with ModelRun(run_id) as tracker:
+            training.main(
+                params=vars(args),
+                env_vars=env_vars,
+                tracker=tracker
+            )
