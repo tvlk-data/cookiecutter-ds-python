@@ -2,6 +2,5 @@
     "project_name": "Name of your project",
     "project_desc": "A short description of the project.",
     "owner": "Person/team in charge email",
-    "_repo_name": "Github repository name",
-    "_gcr_io_project_id": "Image repository project ID"
+    "_repo_name": "Github repository name"
 }

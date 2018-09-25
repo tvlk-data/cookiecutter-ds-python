@@ -1,9 +1,6 @@
 #!/usr/bin/env groovy
 @Library("porter-jenkins-lib@master") _
 
-// image registry project
-def gcrIOProjectId = "{{ cookiecutter._gcr_io_project_id }}" //hardcoded in rmi source code
-
 // GKE deployment setting for the application
 def appName = "{{ cookiecutter._repo_name }}"
 def environment = "stg" //rmi build always in stage
