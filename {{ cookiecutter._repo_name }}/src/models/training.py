@@ -1,6 +1,4 @@
-def main():
+def main(params={}, env_vars={}, **kwargs):
     print("Start training")
-
-
-if __name__ == "__main__":
-    main()
+    print("Hyperparameters", params)
+    print("Environment variables", env_vars)

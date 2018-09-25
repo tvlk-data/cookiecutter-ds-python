@@ -10,10 +10,11 @@ resources:
 # UNCOMMENT CODE BELOW TO ADD MODEL PARAMS
 # params:
 #   - name: feature
-#     type: string
+#     type: str
 #     values: 
 #       - "Life expectancy in yrs"
 # UNCOMMENT CODE BELOW TO ADD ENVIRONMENT VARIABLES
 # envs:
 #   - name: "MLFLOW_TRACKING_URI"
+#     type: str
 #     value: "http://localhost:5000/"
