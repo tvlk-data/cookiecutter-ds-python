@@ -4,7 +4,7 @@ import os
 
 from src.datasets import preprocessing
 from src.models import training
-from rm_sdk.tracking.entities import ModelRun
+from rm_sdk.entities import ModelRun
 
 def is_preprocessing(mode):
     return mode == "all" or mode == "preprocessing"
@@ -15,7 +15,6 @@ def is_training(mode):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("-m", "--mode", help="[preprocessing | training | all] (default:all)")
-    args = parser.parse_args()
     
     env_vars = {}
     with open("rm.yaml", "r") as stream:
@@ -50,11 +49,14 @@ if __name__ == "__main__":
         run_id = os.getenv('RUN_ID')
 
         if not run_id:
-            raise AssertionError("run_id should be int not none")
+            raise AssertionError("RUN_ID should be a string not None")
 
-        with ModelRun(run_id) as tracker:
+        # Require this base_path for model output purpose
+        base_path = os.path.dirname(os.path.realpath(__file__))
+
+        with ModelRun(run_id, base_path) as modelRun:
             training.main(
                 params=vars(args),
                 env_vars=env_vars,
-                tracker=tracker
+                meerkat=modelRun
             )

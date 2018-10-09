@@ -1,4 +1,4 @@
-FROM continuumio/miniconda3:latest
+FROM continuumio/miniconda3:4.5.4
 
 COPY . /app
 WORKDIR /app
