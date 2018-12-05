@@ -4,18 +4,22 @@ import os
 
 from src.datasets import preprocessing
 from src.models import training
-from rm_sdk.entities import ModelRun
+from src.utils.config import get_auth0_config
+from rm_sdk.client import RMClient
+
 
 def is_preprocessing(mode):
     return mode == "all" or mode == "preprocessing"
 
+
 def is_training(mode):
     return mode == "all" or mode == "training"
 
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("-m", "--mode", help="[preprocessing | training | all] (default:all)")
-    
+    parser.add_argument("-m", "--mode", help="[preprocessing | training | all] (default:all)", default="all")
+
     env_vars = {}
     with open("rm.yaml", "r") as stream:
         try:
@@ -49,14 +53,20 @@ if __name__ == "__main__":
         run_id = os.getenv('RUN_ID')
 
         if not run_id:
-            raise AssertionError("RUN_ID should be a string not None")
-
+            raise AssertionError("run_id should be a string not None")
+        
         # Require this base_path for model output purpose
         base_path = os.path.dirname(os.path.realpath(__file__))
 
-        with ModelRun(run_id, base_path) as modelRun:
+        config = {
+            'RM_GRAPHQL_API_URL': os.getenv('RM_GRAPHQL_API_URL'),
+            'AUTH0_CONFIG': get_auth0_config(os.getenv('RM_AUTH0_CONFIG_URI')),
+        }
+        client = RMClient(config)
+        with client.create_model_run(run_id, base_path) as modelRun:
             training.main(
                 params=vars(args),
                 env_vars=env_vars,
                 meerkat=modelRun
             )
+        

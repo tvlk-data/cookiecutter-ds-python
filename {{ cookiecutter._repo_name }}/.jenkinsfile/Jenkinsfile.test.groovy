@@ -36,12 +36,8 @@ coreJenkinsWorkerNode(
 
   stage('Test') {
     container('python') {
-      //install the requirement from this app
-      sh "pip install -r requirements.txt"
-      sh "pip install -r test-requirements.txt"
-
-      // run unit test here, using pytest or unittest
-      sh "pytest tests"
+      //install the requirement and run UT
+      sh "pip install -r requirements.txt && pip install pytest==3.5.* && pytest tests"
     }
   }
 }
