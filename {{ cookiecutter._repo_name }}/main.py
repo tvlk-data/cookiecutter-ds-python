@@ -67,6 +67,6 @@ if __name__ == "__main__":
             training.main(
                 params=vars(args),
                 env_vars=env_vars,
-                tracker=modelRun
+                meerkat=modelRun
             )
         
