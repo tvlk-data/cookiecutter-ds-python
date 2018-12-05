@@ -7,14 +7,16 @@ resources:
   limits:
     memory: "4Gi"
     cpu: "2"
+envs:
+  - name: "RM_GRAPHQL_API_URL"
+    type: str
+    value: "https://asia-northeast1-tvlk-data-dev-179204.cloudfunctions.net/rm-api/graphql"
+  - name: "RM_AUTH0_CONFIG_URI"
+    type: str
+    value: "gs://rm-config/auth0-stg.json.enc"
 # UNCOMMENT CODE BELOW TO ADD MODEL PARAMS
 # params:
 #   - name: feature
 #     type: str
 #     values: 
 #       - "Life expectancy in yrs"
-# UNCOMMENT CODE BELOW TO ADD ENVIRONMENT VARIABLES
-# envs:
-#   - name: "MLFLOW_TRACKING_URI"
-#     type: str
-#     value: "http://localhost:5000/"

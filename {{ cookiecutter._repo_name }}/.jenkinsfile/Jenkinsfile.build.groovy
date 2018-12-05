@@ -21,7 +21,7 @@ coreJenkinsWorkerNode(
         clusterZone: "asia-southeast1-a",
 
         additionalContainers:[
-                containerTemplate(name: 'python', image: 'python:3.6', ttyEnabled: true, command: 'python')
+            containerTemplate(name: 'python', image: 'python:3.6', ttyEnabled: true, command: 'python')
         ]
 ){
     stage('Checkout') {
@@ -29,25 +29,39 @@ coreJenkinsWorkerNode(
     }
 
     def commitId = sh(returnStdout: true, script: "git rev-parse HEAD").trim().take(6)
+    def plainTextName = "raring-meerkat-model-builder.json"
+    def cipherTextName = "raring-meerkat-model-builder.json.enc"
+    def cipherTextLocation = "gs://raring-meerkat-common/${cipherTextName}"
 
     currentBuild.displayName = "#$BUILD_NUMBER ${commitId}"
     currentBuild.description = "Commit Hash: ${commitId}"
 
-    stage('Test') {
-        container('python') {
-            //install the requirement from this app
-            sh "pip install -r requirements.txt"
-            sh "pip install -r test-requirements.txt"
+    // UNCOMMENT THIS SECTION IF YOU WANT TO ADD UNIT TEST
+    // stage('Test') {
+    //     container('python') {
+    //         //install the requirement from this app
+    //         sh "pip install -r requirements.txt"
+    //         sh "pip install -r test-requirements.txt"
 
-            // run unit test here, using pytest or unittest
-            sh "pytest tests"
-        }
-    }
+    //         // run unit test here, using pytest or unittest
+    //         sh "pytest tests"
+    //     }
+    // }
 
     stage('Build') {
-        sh "wget https://storage.googleapis.com/rmi-releases/latest/linux/amd64/rmi.tar.gz"
+        sh "gsutil cp ${cipherTextLocation} ."
+        sh """
+            gcloud kms decrypt \
+                --location global \
+                --keyring raring-meerkat-common \
+                --key model-builder \
+                --ciphertext-file ${cipherTextName} \
+                --plaintext-file ${plainTextName}
+        """
+        sh "wget https://storage.googleapis.com/rmi-releases/master-cd/latest/linux/amd64/rmi.tar.gz"
         sh "tar xzf rmi.tar.gz"
         sh "chmod +x rmi"
-        sh "./rmi build"
+        sh "GOOGLE_APPLICATION_CREDENTIALS=${plainTextName} ./rmi version"
+        sh "GOOGLE_APPLICATION_CREDENTIALS=${plainTextName} ./rmi build"
     }
 }
