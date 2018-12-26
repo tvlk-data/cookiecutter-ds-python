@@ -11,13 +11,10 @@ coreJenkinsWorkerNode(
         environment: environment,
         appName: appName,
         slackChannel: "#data-jenkins-hub",
-        //the gke cluster where the training will be executed
-        //set to default since
-        // 1. we're reusing coreJenkinsWorkerNode that also interfaces to Kubernetes cluster
-        // 2. we don't want to expose to client (i.e. rm.yaml)
-        //we can remove them once we created a new helper function specific to rmi
-        clusterProjectId: "tvlk-data-dev-179204",
-        clusterName: "tvlk-data-dev",
+        // The gke cluster where the training will be executed
+        // Set to default
+        clusterProjectId: "tvlk-data-mlplatform-prod",
+        clusterName: "rm-training",
         clusterZone: "asia-southeast1-a",
 
         additionalContainers:[
@@ -31,7 +28,7 @@ coreJenkinsWorkerNode(
     def commitId = sh(returnStdout: true, script: "git rev-parse HEAD").trim().take(6)
     def plainTextName = "raring-meerkat-model-builder.json"
     def cipherTextName = "raring-meerkat-model-builder.json.enc"
-    def cipherTextLocation = "gs://raring-meerkat-common/${cipherTextName}"
+    def cipherTextLocation = "gs://raring-meerkat-common-kms/${cipherTextName}"
 
     currentBuild.displayName = "#$BUILD_NUMBER ${commitId}"
     currentBuild.description = "Commit Hash: ${commitId}"
