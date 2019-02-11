@@ -13,10 +13,12 @@ envs:
     value: "https://asia-northeast1-tvlk-data-dev-179204.cloudfunctions.net/rm-api/graphql"
   - name: "RM_AUTH0_CONFIG_URI"
     type: str
-    value: "gs://rm-config/auth0-stg.json.enc"
+    value: "gs://raring-meerkat-common-kms/auth0-dev.json.enc"
+  - name: "MODEL_UPLOAD_URI"
+    type: str
+    value: "gs://rm-project-artifacts"
 # UNCOMMENT CODE BELOW TO ADD MODEL PARAMS
 # params:
-#   - name: feature
-#     type: str
-#     values: 
-#       - "Life expectancy in yrs"
+#   - name: learning_rate
+#     type: float
+#     value: 0.001
