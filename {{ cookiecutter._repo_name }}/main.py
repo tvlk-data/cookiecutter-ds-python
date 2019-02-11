@@ -34,11 +34,11 @@ if __name__ == "__main__":
             
             for env in config["envs"]:
                 if env["type"] == "float":
-                    env_vars[env["name"]] = float(env["value"])
+                    env_vars[env["name"]] = os.getenv(env["name"], float(env["value"]))
                 elif env["type"] == "int":
-                    env_vars[env["name"]] = int(env["value"])
+                    env_vars[env["name"]] = os.getenv(env["name"], int(env["value"]))
                 else:
-                    env_vars[env["name"]] = str(env["value"]) # Default is str for env vars
+                    env_vars[env["name"]] = os.getenv(env["name"], str(env["value"])) # Default is str for env vars
 
         except yaml.YAMLError as ex:
             print(ex)
@@ -59,9 +59,17 @@ if __name__ == "__main__":
         base_path = os.path.dirname(os.path.realpath(__file__))
 
         config = {
-            'RM_GRAPHQL_API_URL': os.getenv('RM_GRAPHQL_API_URL'),
-            'AUTH0_CONFIG': get_auth0_config(os.getenv('RM_AUTH0_CONFIG_URI')),
+            'RM_GRAPHQL_API_URL': env_vars['RM_GRAPHQL_API_URL'],
+            'AUTH0_CONFIG': get_auth0_config(
+                auth0_config_uri=env_vars['RM_AUTH0_CONFIG_URI'],
+                project_id='tvlk-data-mlplatform-prod',
+                location_id='global',
+                key_ring_id='raring-meerkat-common', 
+                crypto_key_id='auth0-dev'
+            ),
+            'MODEL_UPLOAD_URI': env_vars['MODEL_UPLOAD_URI']
         }
+
         client = RMClient(config)
         with client.create_model_run(run_id, base_path) as modelRun:
             training.main(
