@@ -20,7 +20,7 @@ coreJenkinsWorkerNode(
     def cipherTextLocation = "gs://raring-meerkat-common-kms/${cipherTextName}"
 
     currentBuild.displayName = "#$RUN_ID ${runId}"
-    currentBuild.description = "RUN_ID: ${runId} \n BUILD_ID: ${buildId}"
+    currentBuild.description = "RUN_ID: ${runId}"
 
     // UNCOMMENT THIS SECTION IF YOU WANT TO ADD UNIT TEST
     // stage('Test') {
@@ -48,11 +48,7 @@ coreJenkinsWorkerNode(
         sh "tar xzf rmi.tar.gz"
         sh "chmod +x rmi"
         sh "GOOGLE_APPLICATION_CREDENTIALS=${plainTextName} ./rmi version"
-        dir("src/serving")
-        if(env.envType == null){
-            sh "GOOGLE_APPLICATION_CREDENTIALS=${plainTextName} ./rmi deploy ${runId}"
-        } else {
-            sh "GOOGLE_APPLICATION_CREDENTIALS=${plainTextName} ./rmi deploy ${runId} --env env.envType"
-        }
+        sh "GOOGLE_APPLICATION_CREDENTIALS=${plainTextName} ./rmi build serving ${runId}"
+        sh "GOOGLE_APPLICATION_CREDENTIALS=${plainTextName} ./rmi deploy ${runId}"
     }
 }
