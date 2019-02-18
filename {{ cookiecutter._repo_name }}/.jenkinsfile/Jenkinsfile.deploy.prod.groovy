@@ -15,6 +15,9 @@ coreJenkinsWorkerNode(
     clusterName: "rm-deployment",
     clusterZone: "asia-southeast1-a"
 ){
+    stage('Checkout') {
+        checkout scm
+    }
     def plainTextName = "raring-meerkat-model-builder.json"
     def cipherTextName = "raring-meerkat-model-builder.json.enc"
     def cipherTextLocation = "gs://raring-meerkat-common-kms/${cipherTextName}"
@@ -38,6 +41,7 @@ coreJenkinsWorkerNode(
         sh "gsutil cp ${cipherTextLocation} ."
         sh """
             gcloud kms decrypt \
+                --project tvlk-data-mlplatform-prod \
                 --location global \
                 --keyring raring-meerkat-common \
                 --key model-builder \
