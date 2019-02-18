@@ -11,7 +11,7 @@ coreJenkinsWorkerNode(
     slackChannel: "#data-jenkins-hub",
     // The gke cluster where the model serving will be deployed
     // Set to default
-    clusterProjectId: "tvlk-data-mlplatform-dev",
+    clusterProjectId: "tvlk-data-mlplatform-prod",
     clusterName: "rm-deployment",
     clusterZone: "asia-southeast1-a"
 ){
@@ -19,7 +19,7 @@ coreJenkinsWorkerNode(
     def cipherTextName = "raring-meerkat-model-builder.json.enc"
     def cipherTextLocation = "gs://raring-meerkat-common-kms/${cipherTextName}"
 
-    currentBuild.displayName = "#$RUN_ID ${runId}"
+    currentBuild.displayName = "RUN_ID: ${runId}"
     currentBuild.description = "RUN_ID: ${runId}"
 
     // UNCOMMENT THIS SECTION IF YOU WANT TO ADD UNIT TEST
@@ -49,6 +49,6 @@ coreJenkinsWorkerNode(
         sh "chmod +x rmi"
         sh "GOOGLE_APPLICATION_CREDENTIALS=${plainTextName} ./rmi version"
         sh "GOOGLE_APPLICATION_CREDENTIALS=${plainTextName} ./rmi build serving ${runId}"
-        sh "GOOGLE_APPLICATION_CREDENTIALS=${plainTextName} ./rmi deploy ${runId}"
+        sh "GOOGLE_APPLICATION_CREDENTIALS=${plainTextName} ./rmi deploy ${runId} --env stag"
     }
 }
