@@ -6,10 +6,7 @@ class TrainedModel:
     def predict(self, request):
         return ""
 
-    def health(self):
-        return '200 OK'
-
-
-    def info(self):
-        return ""
+# uncomment the following if you want to customize the display of the info
+    # def info(self):
+    #     return ""
         
