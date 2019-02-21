@@ -53,7 +53,7 @@ coreJenkinsWorkerNode(
         sh "chmod +x rmi"
         sh "gcloud auth activate-service-account --key-file=raring-meerkat-model-builder.json"
         sh "GOOGLE_APPLICATION_CREDENTIALS=${plainTextName} ./rmi version"
-        sh "GOOGLE_APPLICATION_CREDENTIALS=${plainTextName} ./rmi build serving ${runId}"
+        sh "GOOGLE_APPLICATION_CREDENTIALS=${plainTextName} DOCKER_HOST=tcp://docker-daemon.jenkins-slave.svc.cluster.local:2375 ./rmi build serving ${runId}"
         sh "GOOGLE_APPLICATION_CREDENTIALS=${plainTextName} ./rmi deploy ${runId} --env stag"
     }
 }
