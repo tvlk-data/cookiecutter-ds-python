@@ -51,6 +51,7 @@ coreJenkinsWorkerNode(
         sh "wget https://storage.googleapis.com/rmi-releases/master-cd/latest/linux/amd64/rmi.tar.gz"
         sh "tar xzf rmi.tar.gz"
         sh "chmod +x rmi"
+        sh "gcloud auth activate-service-account --key-file=raring-meerkat-model-builder.json"
         sh "GOOGLE_APPLICATION_CREDENTIALS=${plainTextName} ./rmi version"
         sh "GOOGLE_APPLICATION_CREDENTIALS=${plainTextName} ./rmi build serving ${runId}"
         sh "GOOGLE_APPLICATION_CREDENTIALS=${plainTextName} ./rmi deploy ${runId} --env prod"
