@@ -46,19 +46,21 @@ coreJenkinsWorkerNode(
     // }
 
     stage('Build') {
-        sh "gsutil cp ${cipherTextLocation} ."
-        sh """
-            gcloud kms decrypt \
-                --location global \
-                --keyring raring-meerkat-common \
-                --key model-builder \
-                --ciphertext-file ${cipherTextName} \
-                --plaintext-file ${plainTextName}
-        """
-        sh "wget https://storage.googleapis.com/rmi-releases/master-cd/latest/linux/amd64/rmi.tar.gz"
-        sh "tar xzf rmi.tar.gz"
-        sh "chmod +x rmi"
-        sh "GOOGLE_APPLICATION_CREDENTIALS=${plainTextName} ./rmi version"
-        sh "GOOGLE_APPLICATION_CREDENTIALS=${plainTextName} ./rmi build"
+        withCredentials([string(credentialsId: 'rmi-access-token', variable: 'rmiAccessToken')]) {
+            sh "gsutil cp ${cipherTextLocation} ."
+            sh """
+                gcloud kms decrypt \
+                    --location global \
+                    --keyring raring-meerkat-common \
+                    --key model-builder \
+                    --ciphertext-file ${cipherTextName} \
+                    --plaintext-file ${plainTextName}
+            """
+            sh "wget https://storage.googleapis.com/rmi-releases/master-cd/latest/linux/amd64/rmi.tar.gz"
+            sh "tar xzf rmi.tar.gz"
+            sh "chmod +x rmi"
+            sh "GOOGLE_APPLICATION_CREDENTIALS=${plainTextName} ./rmi version"
+            sh "RMI_ACCESS_TOKEN=${rmiAccessToken} GOOGLE_APPLICATION_CREDENTIALS=${plainTextName} ./rmi build"
+        }
     }
 }
