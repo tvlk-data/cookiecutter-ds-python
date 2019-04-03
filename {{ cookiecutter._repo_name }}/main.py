@@ -62,10 +62,10 @@ if __name__ == "__main__":
             'RM_GRAPHQL_API_URL': env_vars['RM_GRAPHQL_API_URL'],
             'AUTH0_CONFIG': get_auth0_config(
                 auth0_config_uri=env_vars['RM_AUTH0_CONFIG_URI'],
-                project_id='tvlk-data-mlplatform-prod',
+                project_id=env_vars['RM_GCP_PROJECT_ID'],
                 location_id='global',
-                key_ring_id='raring-meerkat-common', 
-                crypto_key_id='auth0-dev'
+                key_ring_id=env_vars['RM_COMMON_KMS_KEYRINGS'], 
+                crypto_key_id=env_vars['RM_AUTH0_KMS_CRYPTOKEYS']
             ),
             'MODEL_UPLOAD_URI': env_vars['MODEL_UPLOAD_URI']
         }
