@@ -59,13 +59,13 @@ if __name__ == "__main__":
         base_path = os.path.dirname(os.path.realpath(__file__))
 
         config = {
-            'RM_GRAPHQL_API_URL': env_vars['RM_GRAPHQL_API_URL'],
+            'RM_GRAPHQL_API_URL': os.environ.get('RM_GRAPHQL_API_URL'),
             'AUTH0_CONFIG': get_auth0_config(
-                auth0_config_uri=env_vars['RM_AUTH0_CONFIG_URI'],
-                project_id=env_vars['RM_GCP_PROJECT_ID'],
+                auth0_config_uri=os.environ.get('RM_AUTH0_CONFIG_URI'),
+                project_id=os.environ.get('RM_GCP_PROJECT_ID'),
                 location_id='global',
-                key_ring_id=env_vars['RM_COMMON_KMS_KEYRINGS'], 
-                crypto_key_id=env_vars['RM_AUTH0_KMS_CRYPTOKEYS']
+                key_ring_id=os.environ.get('RM_COMMON_KMS_KEYRINGS'), 
+                crypto_key_id=os.environ.get('RM_AUTH0_KMS_CRYPTOKEYS')
             ),
             'MODEL_UPLOAD_URI': env_vars['MODEL_UPLOAD_URI']
         }
